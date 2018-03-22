@@ -1,11 +1,12 @@
-# ElixirCmake
+# CMake compiler for Mix
 
-**TODO: Add description**
+[![Hex Version](https://img.shields.io/hexpm/v/elixir_cmake.svg "Hex Version")](https://hex.pm/packages/elixir_cmake)
+
+A CMake compiler to help building Ports/NIFs in your Elixir/mix project.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `elixir_cmake` to your list of dependencies in `mix.exs`:
+Add `elixir_cmake` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +16,24 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/elixir_cmake](https://hexdocs.pm/elixir_cmake).
+Add `:cmake` to your compilers in `mix.exs`:
 
+```elixir
+def project do
+  [
+    # ...
+    compilers: [:cmake] ++ Mix.compilers(),
+    # ...
+  ]
+end
+```
+
+## Basic Usage
+
+    TODO
+
+## Configuration Options
+
+    TODO
+
+Be sure to read [the documentation too](http://hexdocs.pm/elixir_cmake).
