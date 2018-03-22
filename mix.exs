@@ -33,7 +33,7 @@ defmodule ElixirCmake.MixProject do
 
   defp package do
     [
-      files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      files: ["lib", "mix.exs", "README*", "LICENSE*", "CHANGELOG*"],
       maintainers: ["Nick Veys"],
       licenses: ["MIT"],
       links: %{
