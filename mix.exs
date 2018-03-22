@@ -10,6 +10,7 @@ defmodule ElixirCmake.MixProject do
       source_url: "https://github.com/code-lever/elixir-cmake",
       homepage_url: "https://github.com/code-lever/elixir-cmake",
       description: description(),
+      docs: [main: "README", extras: ["README.md"]],
       package: package(),
       deps: deps()
     ]
@@ -23,7 +24,7 @@ defmodule ElixirCmake.MixProject do
 
   defp deps do
     [
-      {:ex_doc, "~> 0.0", only: :dev}
+      {:ex_doc, "~> 0.0", only: :dev, runtime: false}
     ]
   end
 
