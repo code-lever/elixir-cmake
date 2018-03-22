@@ -2,18 +2,28 @@ defmodule Mix.Tasks.Compile.Cmake do
   @moduledoc "Builds native source using CMake"
   use Mix.Task
 
+  @default_working_dir "_cmake"
+
   def run(_) do
-    :ok = File.mkdir_p("_cmake")
-    {result, _} = System.cmd("cmake", [".."], cd: "_cmake", stderr_to_stdout: true)
-    Mix.shell().info(result)
-    {result, _} = System.cmd("make", ["all"], cd: "_cmake", stderr_to_stdout: true)
-    Mix.shell().info(result)
+    :ok = File.mkdir_p(@default_working_dir)
+    cmd("cmake", [".."])
+    cmd("make", ["all"])
     :ok
   end
 
   def clean() do
-    {result, _} = System.cmd("make", ["clean"], cd: "_cmake", stderr_to_stdout: true)
-    Mix.shell().info(result)
+    cmd("make", ["clean"])
     :ok
+  end
+
+  defp cmd(exec, args, dir \\ @default_working_dir) do
+    case System.cmd(exec, args, cd: dir, stderr_to_stdout: true) do
+      {result, 0} ->
+        Mix.shell().info(result)
+        :ok
+
+      {result, status} ->
+        Mix.raise("Failure running '#{exec}' (status: #{status}).\n#{result}")
+    end
   end
 end
