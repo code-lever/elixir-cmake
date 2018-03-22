@@ -5,9 +5,9 @@ defmodule Mix.Tasks.Compile.Cmake do
   def run(_) do
     :ok = File.mkdir_p("_cmake")
     {result, _} = System.cmd("cmake", [".."], cd: "_cmake", stderr_to_stdout: true)
-    Mix.shell.info result
+    Mix.shell().info(result)
     {result, _} = System.cmd("make", ["all"], cd: "_cmake", stderr_to_stdout: true)
-    Mix.shell.info result
+    Mix.shell().info(result)
     :ok
   end
 end
