@@ -10,4 +10,10 @@ defmodule Mix.Tasks.Compile.Cmake do
     Mix.shell().info(result)
     :ok
   end
+
+  def clean() do
+    {result, _} = System.cmd("make", ["clean"], cd: "_cmake", stderr_to_stdout: true)
+    Mix.shell().info(result)
+    :ok
+  end
 end
