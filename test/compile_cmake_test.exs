@@ -12,6 +12,7 @@ defmodule Mix.Tasks.Compile.CmakeTest do
       File.rm_rf!("_cmake")
       File.rm_rf!("CMakeLists.txt")
     end)
+
     :ok
   end
 
@@ -20,6 +21,7 @@ defmodule Mix.Tasks.Compile.CmakeTest do
 
     in_fixture(fn ->
       File.rm_rf!("CMakeLists.txt")
+
       capture_io(fn ->
         assert_raise Mix.Error, msg, fn -> run([]) end
       end)
