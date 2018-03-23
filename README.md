@@ -1,5 +1,6 @@
 # CMake compiler for Mix
 
+[![Build Status](https://api.travis-ci.org/code-lever/elixir-cmake.svg)](https://travis-ci.org/code-lever/elixir-cmake)
 [![Hex Version](https://img.shields.io/hexpm/v/elixir_cmake.svg "Hex Version")](https://hex.pm/packages/elixir_cmake)
 
 A CMake compiler to help building Ports/NIFs in your Elixir/mix project.
