@@ -2,15 +2,23 @@ defmodule Mix.Tasks.Compile.Cmake do
   @moduledoc "Builds native source using CMake"
   use Mix.Task
 
+  @default_cmakelists_path ".."
+  @default_make_target "all"
   @default_working_dir "_cmake"
 
-  def run(_) do
+  @doc """
+  Runs this task.
+  """
+  def run(_args) do
     :ok = File.mkdir_p(@default_working_dir)
-    cmd("cmake", [".."])
-    cmd("make", ["all"])
+    cmd("cmake", [@default_cmakelists_path])
+    cmd("make", [@default_make_target])
     :ok
   end
 
+  @doc """
+  Removes compiled artifacts.
+  """
   def clean() do
     cmd("make", ["clean"])
     :ok

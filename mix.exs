@@ -10,7 +10,7 @@ defmodule ElixirCmake.MixProject do
       source_url: "https://github.com/code-lever/elixir-cmake",
       homepage_url: "https://github.com/code-lever/elixir-cmake",
       description: description(),
-      docs: [main: "README", extras: ["README.md"]],
+      docs: docs(),
       package: package(),
       deps: deps()
     ]
@@ -32,6 +32,13 @@ defmodule ElixirCmake.MixProject do
     """
     A CMake compiler to help building Ports/NIFs in your Elixir/mix project.
     """
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: ["README.md"]
+    ]
   end
 
   defp package do
