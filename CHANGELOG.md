@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
+## [0.4.0] - 2018-03-22
+
+### Changed
+
+- Extracted some hard-coded paths into variable for future config replacement
+- Fixed documentation publish issue that broke index page
+
 ## [0.3.0] - 2018-03-22
 
 ### Changed
@@ -23,14 +30,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- README improvements
-- Basic `clean` task
+- Improved README contents
+- Created basic `clean` task
 
 ## 0.1.0 - 2018-03-22
 
 ### Added
 
-- Project created
+- Created project
 - Building simple CMake projects using a static directory structure
 
 [Unreleased]: https://github.com/code-lever/elixir-cmake/compare/v0.3.0...HEAD
