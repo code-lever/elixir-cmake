@@ -13,6 +13,7 @@ defmodule Mix.Tasks.Compile.Cmake do
     :ok = File.mkdir_p(@default_working_dir)
     cmd("cmake", [@default_cmakelists_path])
     cmd("make", [@default_make_target])
+    Mix.Project.build_structure()
     :ok
   end
 
