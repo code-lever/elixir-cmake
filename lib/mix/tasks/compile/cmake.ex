@@ -1,38 +1,54 @@
 defmodule Mix.Tasks.Compile.Cmake do
   @moduledoc "Builds native source using CMake"
-  use Mix.Task
+  use Mix.Task.Compiler
 
-  @default_cmakelists_path ".."
-  @default_make_target "all"
-  @default_working_dir "_cmake"
+  @cmake_binaries "_cmake"
+
+  @switches [
+    verbose: :boolean
+  ]
 
   @doc """
   Runs this task.
   """
-  def run(_args) do
-    :ok = File.mkdir_p(@default_working_dir)
-    cmd("cmake", [@default_cmakelists_path])
-    cmd("make", [@default_make_target])
-    Mix.Project.build_structure()
+  def run(args) do
+    {opts, _, _} = OptionParser.parse(args, switches: @switches)
+
+    project = Mix.Project.config()
+
+    opts = Keyword.merge(project[:cmake_options] || [], opts)
+
+    generator = if(name = Keyword.get(opts, :generator), do: ["-G", name], else: [])
+    defs = get_defs(opts)
+    envs = get_envs(opts)
+
+    # generate
+    {result, _} = System.cmd("cmake", generator ++ defs ++ ["-B", "_cmake", "."], env: envs, stderr_to_stdout: true)
+    Mix.shell().info(result)
+    
+    # build
+    {result, _} = cmake_build(:install, stderr_to_stdout: true)
+    #Mix.shell().info(result)
     :ok
   end
-
-  @doc """
-  Removes compiled artifacts.
-  """
+  
   def clean() do
-    cmd("make", ["clean"])
+    {result, _} = cmake_build(:clean, stderr_to_stdout: true)
+    #Mix.shell().info(result)
     :ok
   end
+  
+  defp cmake_build(target, opts \\ []) do
+    System.cmd("cmake", ["--build", "_cmake", "--target", Atom.to_string(target)], opts)
+  end
 
-  defp cmd(exec, args, dir \\ @default_working_dir) do
-    case System.cmd(exec, args, cd: dir, stderr_to_stdout: true) do
-      {result, 0} ->
-        Mix.shell().info(result)
-        :ok
+  defp get_defs(keywords) do
+    Keyword.get(keywords, :define, [])
+    |> Enum.map(fn {name, val} -> "-D#{Atom.to_string(name)}=#{val}" end)
+  end
 
-      {result, status} ->
-        Mix.raise("Failure running '#{exec}' (status: #{status}).\n#{result}")
-    end
+  defp get_envs(keywords) do
+    Keyword.get(keywords, :env, [])
+    |> Enum.map(fn {name, val} -> {Atom.to_string(name), val} end)
   end
 end
