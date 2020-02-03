@@ -39,8 +39,9 @@ existing CMakeLists.txt file in your project config.
 ```elixir
 def project do
   [
-    #...
-    cmake_lists: "path/to/CMakeLists.txt"
+    # ...
+    cmake_lists: "path/to/CMakeLists.txt",
+    # ...
   ]
 end
 ```
