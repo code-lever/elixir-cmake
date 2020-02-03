@@ -1,8 +1,6 @@
 defmodule Mix.Tasks.Compile.Cmake do
   @moduledoc "Builds native source using CMake"
   use Mix.Task
-
-  @default_cmakelists_path ".."
   @default_make_target "all"
   @default_working_dir "cmake"
 
@@ -14,7 +12,15 @@ defmodule Mix.Tasks.Compile.Cmake do
 
     working_dir = working_dir(config)
     :ok = File.mkdir_p(working_dir)
-    cmd("cmake", [cmake_list], working_dir)
+
+    make_targets =
+      (config[:make_targets] || [@default_make_target])
+
+    cmake_lists =
+      (config[:cmake_lists] || File.cwd!() )
+      |> Path.expand()
+
+    cmd("cmake", [cmake_lists], working_dir)
     cmd("make", make_targets, working_dir)
     Mix.Project.build_structure()
     :ok
