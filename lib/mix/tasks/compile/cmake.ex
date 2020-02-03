@@ -4,15 +4,18 @@ defmodule Mix.Tasks.Compile.Cmake do
 
   @default_cmakelists_path ".."
   @default_make_target "all"
-  @default_working_dir "_cmake"
+  @default_working_dir "cmake"
 
   @doc """
   Runs this task.
   """
   def run(_args) do
-    :ok = File.mkdir_p(@default_working_dir)
-    cmd("cmake", [@default_cmakelists_path])
-    cmd("make", [@default_make_target])
+    config = Mix.Project.config()
+
+    working_dir = working_dir(config)
+    :ok = File.mkdir_p(working_dir)
+    cmd("cmake", [cmake_list], working_dir)
+    cmd("make", make_targets, working_dir)
     Mix.Project.build_structure()
     :ok
   end
@@ -21,11 +24,15 @@ defmodule Mix.Tasks.Compile.Cmake do
   Removes compiled artifacts.
   """
   def clean() do
-    cmd("make", ["clean"])
+    working_dir =
+      Mix.Project.config()
+      |> working_dir()
+
+    cmd("make", ["clean"], working_dir)
     :ok
   end
 
-  defp cmd(exec, args, dir \\ @default_working_dir) do
+  defp cmd(exec, args, dir) do
     case System.cmd(exec, args, cd: dir, stderr_to_stdout: true) do
       {result, 0} ->
         Mix.shell().info(result)
@@ -34,5 +41,11 @@ defmodule Mix.Tasks.Compile.Cmake do
       {result, status} ->
         Mix.raise("Failure running '#{exec}' (status: #{status}).\n#{result}")
     end
+  end
+
+  defp working_dir(config) do
+    config
+    |> Mix.Project.build_path()
+    |> Path.join(@default_working_dir)
   end
 end
