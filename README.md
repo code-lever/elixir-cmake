@@ -36,12 +36,14 @@ end
 Create your CMakeLists.txt in the root of your project or specify the path to an
 existing CMakeLists.txt file in your project config.
 
-  def project do
-    [
-      #...
-      cmake_lists: "path/to/CMakeLists.txt"
-    ]
-  end
+```elixir
+def project do
+  [
+    #...
+    cmake_lists: "path/to/CMakeLists.txt"
+  ]
+end
+```
 
 The source files can reside anywhere the CMakeLists.txt file has access to.
 
