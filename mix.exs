@@ -4,7 +4,7 @@ defmodule ElixirCmake.MixProject do
   def project do
     [
       app: :elixir_cmake,
-      version: "0.6.0",
+      version: "0.7.0",
       elixir: "~> 1.3",
       build_embedded: Mix.env() == :prod,
       source_url: "https://github.com/code-lever/elixir-cmake",

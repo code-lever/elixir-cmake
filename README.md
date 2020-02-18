@@ -33,9 +33,26 @@ end
 
 ### CMakeLists.txt
 
-Create your CMakeLists.txt in the root of your project.  The source files can reside anywhere
-the CMakeLists.txt file has access to.  Direct the binary output to `priv/`.  A project named
-`EXAMPLE`, with source files in `src/`:
+Create your CMakeLists.txt in the root of your project or specify the path to an
+existing CMakeLists.txt file in your project config.
+
+```elixir
+def project do
+  [
+    # ...
+    cmake_lists: "path/to/CMakeLists.txt",
+    # ...
+  ]
+end
+```
+
+The source files can reside anywhere the CMakeLists.txt file has access to.
+
+You will need to copy the contents to your `priv` directory by either specifying
+a compile alias or by directing the binary output to `priv/` in your CMakeLists.txt.
+file.
+
+In this example we specify a project named`EXAMPLE`, with source files in `src/`:
 
 ```cmake
 cmake_minimum_required(VERSION 3.0)

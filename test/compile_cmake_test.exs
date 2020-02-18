@@ -9,7 +9,6 @@ defmodule Mix.Tasks.Compile.CmakeTest do
   setup do
     in_fixture(fn ->
       File.rm_rf!("_build")
-      File.rm_rf!("_cmake")
       File.rm_rf!("CMakeLists.txt")
     end)
 

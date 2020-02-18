@@ -59,11 +59,9 @@ defmodule Mix.Tasks.Compile.Cmake do
   """
   use Mix.Task
 
-  @recursive true
-
-  @default_cmakelists_path ".."
   @default_make_target "all"
-  @default_working_dir "_cmake"
+  @default_working_dir "cmake"
+  @recursive true
 
   @doc """
   Runs this task.
@@ -75,10 +73,21 @@ defmodule Mix.Tasks.Compile.Cmake do
     env = if is_function(env), do: env.(), else: env
     env = default_env(config, env)
 
-    :ok = File.mkdir_p(@default_working_dir)
-    cmd("cmake", [@default_cmakelists_path], env)
-    cmd("make", [@default_make_target], env)
+    working_dir = working_dir(config)
+    :ok = File.mkdir_p(working_dir)
+
+    make_targets =
+      (config[:make_targets] || [@default_make_target])
+
+    cmake_lists =
+      (config[:cmake_lists] || File.cwd!())
+      |> Path.expand()
+
+    cmd("cmake", [cmake_lists], working_dir, env)
+    cmd("make", make_targets, working_dir, env)
+
     Mix.Project.build_structure()
+
     :ok
   end
 
@@ -86,12 +95,15 @@ defmodule Mix.Tasks.Compile.Cmake do
   Removes compiled artifacts.
   """
   def clean() do
-    cmd("make", ["clean"])
-    File.rm_rf(@default_working_dir)
+    working_dir =
+      Mix.Project.config()
+      |> working_dir()
+
+    cmd("make", ["clean"], working_dir)
     :ok
   end
 
-  defp cmd(exec, args, env \\ %{}, dir \\ @default_working_dir) do
+  defp cmd(exec, args, dir, env \\ %{}) do
     case System.cmd(exec, args, cd: dir, stderr_to_stdout: true, env: env) do
       {result, 0} ->
         Mix.shell().info(result)
@@ -137,5 +149,11 @@ defmodule Mix.Tasks.Compile.Cmake do
 
   defp env(var, default) do
     System.get_env(var) || default
+  end
+
+  defp working_dir(config) do
+    config
+    |> Mix.Project.build_path()
+    |> Path.join(@default_working_dir)
   end
 end
