@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
+## [0.7.0] - 2020-03-08
+
+### Added
+
+- Added useful environment variables for build ala `elixir_cmake` ([PR #5](https://github.com/code-lever/elixir-cmake/pull/5))
+
 ## [0.6.0] - 2020-02-03
 
 ### Changed
@@ -56,7 +62,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Created project
 - Building simple CMake projects using a static directory structure
 
-[Unreleased]: https://github.com/code-lever/elixir-cmake/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/code-lever/elixir-cmake/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/code-lever/elixir-cmake/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/code-lever/elixir-cmake/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/code-lever/elixir-cmake/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/code-lever/elixir-cmake/compare/v0.3.0...v0.4.0
