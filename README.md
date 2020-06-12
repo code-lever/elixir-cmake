@@ -12,7 +12,7 @@ Add `elixir_cmake` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:elixir_cmake, "~> 0.1.0"}
+    {:elixir_cmake, "~> 0.7.0"}
   ]
 end
 ```
