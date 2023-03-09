@@ -153,7 +153,7 @@ defmodule Mix.Tasks.Compile.Cmake do
 
   defp working_dir(config) do
     config
-    |> Mix.Project.build_path()
+    |> Mix.Project.app_path()
     |> Path.join(@default_working_dir)
   end
 end
